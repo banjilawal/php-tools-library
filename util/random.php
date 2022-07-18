@@ -149,6 +149,11 @@
 
         public static function amount (float $floor, float $ceiling) {
 
+            $result = 0.00;
+            $result = ((rand()/100.00) * ($ceiling - $floor)) + $floor;
+
+            return $result;
+
         } // close amount
 
 
