@@ -1,13 +1,12 @@
 <?php
     # directory paths
-    define ('ROOT_PATH',  __DIR__ );
-    define ('BANJI_PATH',  __DIR__ .  DIRECTORY_SEPARATOR );
+    define ('ROOT',  __DIR__ );
 
-    define ('UTIL_PATH', BANJI_PATH . 'util' .  DIRECTORY_SEPARATOR);
-    define ('LIBRARY_PATH', BANJI_PATH . 'libris' . DIRECTORY_SEPARATOR);
-    define ('FAMILY_PATH', LIBRARY_PATH . 'family' .  DIRECTORY_SEPARATOR);
-    define ('DATASETS_PATH', BANJI_PATH . 'datasets' .  DIRECTORY_SEPARATOR);
-    
+    define ('UTIL_PATH', ROOT . DIRECTORY_SEPARATOR . 'util');
+    define ('LIBRARY_PATH', ROOT . DIRECTORY_SEPARATOR . 'libris'); 
+    define ('DATASETS_PATH', ROOT . DIRECTORY_SEPARATOR . 'datasets');
+
+    define ('FAMILY_PATH', LIBRARY_PATH . DIRECTORY_SEPARATOR . 'family');
     define ('ORDER_FAMILY_PATH', FAMILY_PATH . DIRECTORY_SEPARATOR  . 'order');
     define ('PERSONA_FAMILY_PATH', FAMILY_PATH . DIRECTORY_SEPARATOR . 'persona');
 

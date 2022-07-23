@@ -10,13 +10,13 @@
 
     use \banji\util\Util; 
     use \Exception, \DateTime, \Throw;
-    ;
 
     class Random {
 
-        const LAST_NAMES = DATASETS_PATH . DIRECTORY_SEPARATOR . 'last-names.txt';
-        const FIRST_NAMES = DATASETS_PATH . DIRECTORY_SEPARATOR . 'gendered-first-names.csv';
         const ADDRESSES = DATASETS_PATH . DIRECTORY_SEPARATOR . 'addresses.csv';
+        const LAST_NAMES = DATASETS_PATH . DIRECTORY_SEPARATOR . 'last-names.txt';
+        const EMAIL_PROVIDERS = DATASETS_PATH . DIRECTORY_SEPARATOR . 'email-providers.txt';
+        const FIRST_NAMES = DATASETS_PATH . DIRECTORY_SEPARATOR . 'gendered-first-names.csv';
 
         const ALL_LETTERS = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','P','O','Q','R','S','T','U','V','W','X','Y','Z');
         const UNAMBIGOUS_LETTERS = array('A','B','C','D','E','F','G','H','J','K','M','N','P','Q','R','S','T','U','V','W','X','Y','Z');
@@ -32,6 +32,58 @@
             return $lines[$row];
 
         } // close line_reader
+
+
+        public static function isp () {
+
+            return Random::line_reader(self::EMAIL_PROVIDERS);
+
+        } // close isp
+
+
+        public static function email_separator () {
+
+            $separators = ['_', '-', '.'];
+
+            if (rand(1, 9) > 5) {
+                $index = rand (0,2);
+                return $separators[$index];
+            }
+            else 
+                return ''; 
+
+        } // close email_separator
+
+
+        public static function email(String $firstname, String $lastname) {
+
+            $numbers = '';
+            $username = '';
+            $hasNumbers = rand(0,9);
+
+            if ($hasNumbers < 6) {
+                $numbers = Random::numeric('unambiguous', 4);
+                $outcome = rand(0,9);
+
+                if ($outcome > 3 || $outcome <= 6) { 
+                    $username = $firstname . $numbers . Random::email_separator() . $lastname;
+                }
+                else if ($outcome > 6 || $outcome <= 9) { 
+                    $username = $firstname . Random::email_separator() . $lastname . $numbers;
+                }
+                else {
+                    $username = $numbers . $firstname . Random::email_separator() . $lastname;
+                }
+            }
+            else {
+                $username = $firstname . Random::email_separator() . $lastname;
+            }
+                $username = trim($username);
+
+            return strtolower($username . '@' . trim(Random::isp()));
+
+        } // close email
+
 
         public static function name (String $category) {
 
@@ -149,27 +201,9 @@
 
         public static function amount (float $floor, float $ceiling) {
 
-            $result = 0.00;
-            $result = ((rand()/100.00) * ($ceiling - $floor)) + $floor;
-
-            return $result;
+            return ((rand(0,99)/100.00) * ($ceiling - $floor));
 
         } // close amount
-
-
-        public static function some_time (DateTime $seed) {
-
-        } // close some_time
-
-
-        public static function some_date (DateTime $seed) {
-
-        } // close some_time
-
-
-        public static function some_date_time (DateTime $seed) {
-
-        } // close some_time
 
 
         public static function picture (String $path) {

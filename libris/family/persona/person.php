@@ -1,22 +1,44 @@
 <?php
     namespace banji\libris\family\persona;
 
-    require_once('../../../config.php');
+    function find_config_path () {
+
+        $root = '';
+        $abs_path = explode('/', $_SERVER['DOCUMENT_ROOT']);
+        $project_home = explode('/', $_SERVER['REQUEST_URI'])[1];
+
+        foreach ($abs_path as $dir) {
+            $root .= $dir . DIRECTORY_SEPARATOR;
+        }
+    
+        $root = trim($root, DIRECTORY_SEPARATOR);
+        return $root . DIRECTORY_SEPARATOR . $project_home . DIRECTORY_SEPARATOR . 'config.php';
+
+    } // close find_config_path
+    
+    $config_path = find_config_path();
+
+    require_once($config_path);
     
     require_once(UTIL_PATH . DIRECTORY_SEPARATOR . 'util.php');
+    require_once(UTIL_PATH . DIRECTORY_SEPARATOR . 'time.php');
     require_once(UTIL_PATH . DIRECTORY_SEPARATOR . 'random.php');
+    require_once(UTIL_PATH . DIRECTORY_SEPARATOR . 'StreamDate.php');
 
     require_once(PERSONA_FAMILY_PATH . DIRECTORY_SEPARATOR . 'phone.php');
     require_once(PERSONA_FAMILY_PATH . DIRECTORY_SEPARATOR . 'postalAddress.php');
 
     use \Exception, \DateTime;
-    use \banji\util\{Util, Random}; 
+    use \banji\util\{Util, StreamDate, Random}; 
     use \banji\libris\family\persona\{Phone, PostalAddress};
 
 
-    abstract class Person {
+    class Person {
+
         const FIRST_NAME_PATTERN =  '/[A-Z]{2,}/i';
         const LAST_NAME_PATTERN = '/([A-Z]{3,}|[A-Z]{3,}\s[A-Z]{3,})/i';
+
+        const MAX_DATE = '1919-01-01';
 
         private String $id;
         private String $firstname;
@@ -24,7 +46,7 @@
         private String $email;
 
         private Phone $phone;
-        private DateTime $birthdate;
+        private StreamDate $birthdate;
 
         private PostalAddress $address;
 
@@ -35,17 +57,17 @@
             $this->firstname = '';
             $this->lastname = '';
             $this->email = '';
-            $this->phone = null;
-            $this->birthdate = null;
-            $this->address = null;
+            $this->phone = new Phone();
+            $this->birthdate = new StreamDate('0000-01-01');
+            $this->address = new PostalAddress();
             
         } // close construct
 
-        abstract public function build(String $str);
+        #abstract public function build(String $str);
 
 
         #abstracts
-        abstract function id (String $id);
+        #abstract function id (String $id);
 
 
         #setters
@@ -88,8 +110,9 @@
         } // close email
 
 
-        public function birthdate (DateTime $birthdate) {
-            $this->birthdate = $birthdate;
+        public function birthdate (String $birthdate) {
+
+            $this->birthdate->isoDate($birthdate);
 
         } // close birthdate
 
@@ -101,7 +124,7 @@
                     . '<td>' . $this->id . '</td>'
                     . '<td>' . $this->firstname . '</td>'
                     . '<td>' . $this->lastname. '</td>'
-                    . '<td>' . $this->birthdate->format('Y-m-d') . '</td>'
+                    . '<td>' . $this->birthdate->getDate() . '</td>'
                     . '<td>' . $this->phone . '</td>'
                     . '<td>' . $this->email . '</td>'
                     . '<td>' . $this->address->get_street() . '</td>' 
@@ -136,7 +159,7 @@
                                 . '<td>' . $this->id . '</>'
                                 . '<td>' . $this->firstname . '</td>'
                                 . '<td>' . $this->lastname. '</td>'
-                                . '<td>' . Util::print_date($this->birthdate) . '</td>'
+                                . '<td>' . $this->birthdate->getDate() . '</td>'
                                 . '<td>' . $this->phone . '</td>'
                                 . '<td>' . $this->email . '</td>'
                                 . '<td>' . $this->address->get_street() . '</td>'
@@ -155,7 +178,7 @@
             $string = 'id: ' .$this->id . '<br>' . PHP_EOL
                 . 'firstname: ' . $this->firstname . '<br>' . PHP_EOL   
                 . 'lastname: ' . $this->lastname . '<br>' . PHP_EOL
-                . 'birthdate: ' . Util::print_date($this->birthdate) . '<br>' . PHP_EOL
+                . 'birthdate: ' . $this->birthdate->getDate()  . '<br>' . PHP_EOL
                 . 'phone: ' . $this->phone . '<br>' . PHP_EOL
                 . 'email: ' . $this->email . '<br>' . PHP_EOL
                 . 'address: ' . $this->address . '<br>' . PHP_EOL;
@@ -175,6 +198,23 @@
 
         # statics 
         public static function random () {
+
+            $person = new Person ();
+
+            $current_date = date('Y-m-d');
+            echo 'current date: ' . $current_date . '<br>';
+
+            $birthDate = StreamDate::random(self::MAX_DATE, $current_date);
+            $person->birthdate($birthDate->getDate());
+
+            $person->firstname(Random::name('firstname'));
+            $person->lastname(Random::name('lastname'));
+
+            $person->phone(Phone::random());
+            $person->address(PostalAddress::random());
+            $person->email(Random::email($person->get_firstname(), $person->get_lastname()));
+
+            return $person;
 
         } // close random
  

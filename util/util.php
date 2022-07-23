@@ -2,13 +2,15 @@
     namespace Banji\Util;
     require_once('../config.php');
 
-    use \DateTime;
+    use \DateTime, \Exception;
 
     class Util {
 
         const WORD_PATTERN = '/[A-Z]{3,}/i';
+        const DATE_PATTERN = '/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/';
 
         public static function sanitize_input ($data) {
+            
             if (isset($data) == false) {
                 Throw new \Exception($data . ' Cannot process null data');
             }
@@ -16,6 +18,7 @@
             $data = stripslashes($data);
             $data = htmlspecialchars($data);
             return $data; 
+
         } // close sanitize_input
     
     
@@ -31,10 +34,21 @@
                 return '';
             }
             else {
-                return $date->format('Y-m-d hh:mm:s');
+                return $date->format('Y-m-d'); # hh:mm:s');
             }
     
         } // close print_date
+
+
+        public static function string_to_date (String $dateString) {
+
+            if (preg_match(self::DATE_PATTERN, $dateString) != 1) {
+                throw new Exception($dateString . ' is not an ISO compliant date string');
+            }
+
+            return strtotime($dateString);
+
+        } // close string_to_date
     
     
         public static function date_handler (\DateTime $date) {
