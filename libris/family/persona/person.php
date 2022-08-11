@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
     namespace banji\libris\family\persona;
 
     function find_config_path () {
@@ -17,7 +17,6 @@
     } // close find_config_path
     
     $config_path = find_config_path();
-
     require_once($config_path);
     
     require_once(UTIL_PATH . DIRECTORY_SEPARATOR . 'util.php');

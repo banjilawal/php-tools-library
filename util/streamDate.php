@@ -17,7 +17,6 @@
     } // close find_config_path
     
     $config_path = find_config_path();
-
     require_once($config_path);   
 
 
