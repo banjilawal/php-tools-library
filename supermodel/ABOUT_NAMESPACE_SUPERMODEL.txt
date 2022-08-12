@@ -1,0 +1,5 @@
+THE SUPERMODEL NAMESPACE
+-------------------------
+This contains classes and interfaces that can be inherited or implemented when creating models that are frequently used across projects.
+It contains concrete classes for phone numbers, postal addresses, and credit cards.  Many web applications tend to be stores so most of
+the abstract classes and interfaces are related to shopping carts.  There is a Person class which can be inherited for creating customers.

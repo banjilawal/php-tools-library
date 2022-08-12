@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-    namespace banji\Util;
+    namespace banji\util;
 
     require_once('../config.php');
 

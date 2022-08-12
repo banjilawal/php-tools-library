@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-    namespace banji\Libris\Family\Order;
+    namespace banji\supermodel;
 
     function find_config_path () {
 
@@ -21,16 +21,14 @@
 
     interface Orderable {
 
-        public function name(String $name);
-        public function price (Float $price);
+        public function add_orderItem(OrderItem $orderItem);
+        public function remove_orderItem (OrderItem $orderItem);
         public function picture (String $path);
         public function description (String $text);
 
-
-        public function getName ();
-        public function getPrice ();
-        public function getPicture ();
-        public function getDescription ();
+        public function get_tax ();
+        public function get_subtotal ();
+        public function get_total ();
 
     } // end interface Itemable
 ?>

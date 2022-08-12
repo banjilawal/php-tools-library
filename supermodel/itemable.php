@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-    namespace banji\Libris\Family\Item;
+    namespace banji\supermodel;
 
     function find_config_path () {
 
@@ -26,11 +26,10 @@
         public function picture (String $path);
         public function description (String $text);
 
-
-        public function getName ();
-        public function getPrice ();
-        public function getPicture ();
-        public function getDescription ();
+        public function get_name ();
+        public function get_price ();
+        public function get_picture ();
+        public function get_description ();
 
     } // end interface Itemable
 ?>

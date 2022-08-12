@@ -1,5 +1,5 @@
 <?php
-    namespace Banji\Util;
+    namespace banji\util;
     require_once('../config.php');
 
     use \DateTime, \Exception;

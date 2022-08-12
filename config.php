@@ -3,13 +3,8 @@
     define ('ROOT',  __DIR__ );
 
     define ('UTIL_PATH', ROOT . DIRECTORY_SEPARATOR . 'util');
-    define ('LIBRARY_PATH', ROOT . DIRECTORY_SEPARATOR . 'libris'); 
+    define ('SUPERMODEL_PATH', ROOT . DIRECTORY_SEPARATOR . 'supermodel'); 
     define ('DATASETS_PATH', ROOT . DIRECTORY_SEPARATOR . 'datasets');
-
-    define ('FAMILY_PATH', LIBRARY_PATH . DIRECTORY_SEPARATOR . 'family');
-    define ('ITEM_FAMILY_PATH', FAMILY_PATH . DIRECTORY_SEPARATOR . 'item');
-    define ('ORDER_FAMILY_PATH', FAMILY_PATH . DIRECTORY_SEPARATOR  . 'order');
-    define ('PERSONA_FAMILY_PATH', FAMILY_PATH . DIRECTORY_SEPARATOR . 'persona');
 
     # constants
     define ('ADDRESS_FIELD_COUNT', 5);
@@ -36,11 +31,10 @@
 
         # Loop the array.
         for ($i = 0; $i < $total_paths; $i++) {
-            if(file_exists(AP_SITE.$array_paths[$i].$file_name)) {
-                include_once AP_SITE.$array_paths[$i].$file_name;
+         #   if(file_exists(AP_SITE.$array_paths[$i].$file_name)) {
+         #       include_once AP_SITE.$array_paths[$i].$file_name;
             } 
         }
-    }
 
     spl_autoload_register('autoloader');
 ?>

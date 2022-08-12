@@ -6,9 +6,9 @@
     require_once(UTIL_PATH . DIRECTORY_SEPARATOR . 'random.php');
     require_once(UTIL_PATH . DIRECTORY_SEPARATOR . 'streamDate.php');
 
-    require_once(PERSONA_FAMILY_PATH . DIRECTORY_SEPARATOR . 'postalAddress.php');
-    require_once(PERSONA_FAMILY_PATH . DIRECTORY_SEPARATOR . 'phone.php');
-    require_once(PERSONA_FAMILY_PATH . DIRECTORY_SEPARATOR . 'person.php');
+    require_once(SUPERMODEL_PATH . DIRECTORY_SEPARATOR . 'postalAddress.php');
+    require_once(SUPERMODEL_PATH  . DIRECTORY_SEPARATOR . 'phone.php');
+    require_once(SUPERMODEL_PATH  . DIRECTORY_SEPARATOR . 'person.php');
 
     use \Exception, \DateTime;
     use \banji\util\{StreamDate, Util, Random, Time}; 

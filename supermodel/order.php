@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-    namespace banji\Libris\Family\Item;
+    namespace banji\supermodel;
 
     function find_config_path () {
 
@@ -19,10 +19,10 @@
     $config_path = find_config_path();
     require_once($config_path);  
     require_once(UTIL_PATH . DIRECTORY_SEPARATOR . 'random');
-    require_once (ITEM_FAMILY_PATH . DIRECTORY_SEPARATOR . 'itemable.php');
+    require_once (SUPERMODEL_PATH . DIRECTORY_SEPARATOR . 'item.php');
 
     use \Exception, DateTime;
-    use \banji\Libris\Family\Item\Itemable;
+    use \banji\supermodel\Item;
 
     abstract class OrderItem {
 
@@ -33,6 +33,27 @@
         abstract public function item (Item $item);
         abstract public function increase (Int $amount);
         abstract public function decrease (Int $amount);
+        abstract public function quantity (Int $quantity);
 
-    } // end class Item
+
+        # getters
+        public function get_item () {
+
+            return $this->item;
+
+        } // close getItem
+
+
+        public function get_quantity () {
+
+            return $this->quantity;
+
+        } // close getQuantity
+
+
+        # display methods
+        public abstract function to_row ();
+        public abstract function to_table ();
+
+    } // end class OrderItem
 ?>

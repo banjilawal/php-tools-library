@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-    namespace banji\Libris\Family\Item;
+    namespace banji\supermodel;
 
     function find_config_path () {
 
@@ -19,10 +19,9 @@
     $config_path = find_config_path();
     require_once($config_path);  
     require_once(UTIL_PATH . DIRECTORY_SEPARATOR . 'random');
-    require_once (ITEM_FAMILY_PATH . DIRECTORY_SEPARATOR . 'itemable.php');
 
     use \Exception, DateTime;
-    use \banji\Libris\Family\Item\Itemable;
+    use \banji\supermodel\Itemable;
 
     abstract class Item {
 
@@ -35,65 +34,50 @@
 
         # setters
         abstract public function id ();
-        // {
-            
-        //} // close id
-
-
         abstract public function name (String $name); 
-        //{
-
-       // } // close name
-
-
-        abstract public function description (String $text); // {
-
-       // } // close description 
-
-
-        abstract public function imagePath (String $path); //{
-
-        //} // close imagePath
-
-
-        abstract public function price (float $price); //{
-
-        //} // close price
-
+        abstract public function price (float $price);
+        abstract public function imagePath (String $path);
+        abstract public function description (String $text);
 
         # getters
-        public function getID () {
+        public function get_id () {
 
             return $this->id;
 
         } // close getID
         
 
-        public function getName () {
+        public function get_name () {
+
+            return $this->name;
 
         } // close getName
 
 
-        public function getDescription () {
+        public function get_description () {
 
             return $this->description;
 
         } // close getDescription
 
 
-        public function getPrice () { 
+        public function get_price () { 
 
             return $this->price;
 
         } // close getPrice
 
 
-        public function getImagePath () {
+        public function get_picture () {
 
             return $this->imagePath;
 
         } // close getImagePath
-
+                
+        
+        # display methods
+        public abstract function to_row ();
+        public abstract function to_table ();
 
     } // end class Item
 ?>
